@@ -1,0 +1,10 @@
+.fa-user {
+  font-size: 30px;
+  padding: 3px;
+}
+.country1 {
+  color: var(--bs-primary);
+}
+.country2 {
+  color: var(--bs-danger);
+}
