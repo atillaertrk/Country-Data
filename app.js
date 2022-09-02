@@ -7,19 +7,22 @@ const countryInfo1 = document.querySelector(".country1");
 const countryInfo2 = document.querySelector(".country2");
 let contentCount = 0;
 
-const setCountry = (country) => {
-  fetch("https://restcountries.com/v3.1/name/" + country)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          "Country not found. Please write the country name in English."
-        );
-      }
-      return response.json();
-    })
-    .then((data) => displayCountry(data))
-    .catch((error) => displayErr(error));
-};
+async function setCountry(country) {
+  try {
+    const response = await fetch(
+      "https://restcountries.com/v3.1/name/" + country
+    );
+    if (!response.ok) {
+      throw new Error(
+        "Country not found. Please write the country name in English."
+      );
+    }
+    const data = await response.json();
+    displayCountry(data);
+  } catch (error) {
+    displayErr(error);
+  }
+}
 const displayCountry = (data) => {
   contentCount += 1;
   let crn = Object.keys(data[0].currencies)[0];
