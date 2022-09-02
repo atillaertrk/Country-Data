@@ -5,6 +5,7 @@ const content2 = document.querySelector(".row-2");
 const content3 = document.querySelector(".row-3");
 const countryInfo1 = document.querySelector(".country1");
 const countryInfo2 = document.querySelector(".country2");
+const spinner = document.querySelector(".lds-ripple");
 let contentCount = 0;
 
 async function setCountry(country) {
@@ -12,6 +13,7 @@ async function setCountry(country) {
     const response = await fetch(
       "https://restcountries.com/v3.1/name/" + country
     );
+
     if (!response.ok) {
       throw new Error(
         "Country not found. Please write the country name in English."
@@ -20,11 +22,13 @@ async function setCountry(country) {
     const data = await response.json();
     displayCountry(data);
   } catch (error) {
+    spinner.style.display = "none";
     displayErr(error);
   }
 }
 const displayCountry = (data) => {
   contentCount += 1;
+  spinner.style.display = "none";
   let crn = Object.keys(data[0].currencies)[0];
   let mans = (data[0].population / 10000000).toFixed(0);
   let icons = `<i class="fa-solid fa-user"></i>`;
@@ -71,5 +75,6 @@ const displayErr = (error) => {
 };
 btn1.addEventListener("click", () => {
   country = input1.value;
+  spinner.style.display = "inline-block";
   setCountry(country);
 });
